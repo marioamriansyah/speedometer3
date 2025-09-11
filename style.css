@@ -1,0 +1,96 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgb(0, 0, 0);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.speedometer {
+    position: relative;
+    width: 300px;
+    height: 230px;
+    /* setengah */
+}
+
+.gauge {
+    width: 100%;
+    height: 100%;
+}
+
+.gauge-bg {
+    fill: none;
+    stroke: #333;
+    stroke-width: 50;
+    opacity: 0.3;
+    /* stroke-linecap: round; */
+}
+
+.gauge-progress {
+    fill: none;
+    stroke: #198EAB;
+    stroke-width: 50;
+    transition: stroke-dashoffset 0.2s ease;
+}
+
+.speed-text {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 64px;
+    font-weight: 600;
+    color: white;
+}
+
+.unit {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #aaa;
+}
+
+.tick {
+    stroke-width: 2;
+}
+
+.tick-major {
+    stroke: #fff;
+    /* putih untuk 20 km/h */
+    stroke-width: 2.5;
+}
+
+.tick-medium {
+    stroke: #aaa;
+    /* abu sedang untuk 10 km/h */
+    stroke-width: 2;
+}
+
+.tick-small {
+    stroke: #c7c7c7;
+    /* abu gelap untuk 2–8–14 dst */
+    stroke-width: 1.5;
+}
+
+.tick-label {
+    fill: #ffffff;
+    font-size: 15px;
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-weight: 700;
+}
+
+.tick-passed {
+    stroke: black !important;
+}
+
+/* #speed {
+    position: absolute;
+    font-size: 24px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} */

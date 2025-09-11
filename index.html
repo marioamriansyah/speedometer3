@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarPlay Semi-Circle Speedometer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="speedometer">
+        <svg class="gauge" viewBox="0 -25 210 240">
+            <!-- Background arc -->
+            <path class="gauge-bg" d="" />
+            <!-- Progress arc -->
+            <path class="gauge-progress" d="" />
+            <!-- Tick & number -->
+            <g id="ticks"></g>
+        </svg>
+
+        <div class="speed-text" id="speed">0</div>
+        <div class="unit">km/h</div>
+
+        <div id="fuel">100%</div>
+
+        <svg>
+            <path class="fuel-bg" stroke="#333" stroke-width="10" fill="none"></path>
+            <path class="fuel-progress" stroke="#f90" stroke-width="10" fill="none"></path>
+        </svg>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
