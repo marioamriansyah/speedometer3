@@ -163,7 +163,7 @@ const fuelLength = fuelProgress.getTotalLength();
 fuelProgress.style.strokeDasharray = fuelLength;
 
 const fuelText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-fuelText.setAttribute("x", centerX - 4);
+fuelText.setAttribute("x", centerX - 9);
 fuelText.setAttribute("y", centerY + 105);
 fuelText.setAttribute("fill", "#aaa");
 fuelText.setAttribute("font-size", "16px");
@@ -212,11 +212,7 @@ function stopRightIndicator() {
  * @description Converts the speed value to the current speed mode and updates the display.
  */
 function setSpeed(speed) {
-    switch (speedMode) {
-        case 1: speed = elements.speed.innerText = `${Math.round(speed * 2.236936)} MPH`; break; // MPH
-        case 2: speed = elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break; // Knots
-        default: speed = elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`; // KMH
-    }
+    const speedInKmh = Math.round(speed * 3.6);
 }
 
 // Wait for the DOM to be fully loaded
