@@ -17,8 +17,6 @@ const maxSpeed = 160;
 let elements = {};
 let speedMode = 1;
 let indicators = 0;
-let speed = 0;
-let previousGear = null;
 
 const onOrOff = state => state ? 'On' : 'Off';
 
@@ -37,7 +35,7 @@ function polarToCartesian(cx, cy, r, angle) {
     return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
 }
 
-function speedpointer(cx, cy, r, startAngle, endAngle, sweepFlag = 1) {
+function describeArc(cx, cy, r, startAngle, endAngle, sweepFlag = 1) {
     const start = polarToCartesian(cx, cy, r, startAngle);
     const end = polarToCartesian(cx, cy, r, endAngle);
     const largeArcFlag = Math.abs(endAngle - startAngle) <= Math.PI ? "0" : "1";
@@ -46,7 +44,7 @@ function speedpointer(cx, cy, r, startAngle, endAngle, sweepFlag = 1) {
 
 // ====================== SPEEDOMETER ======================
 // background & progress path
-const arcPath = speedpointer(centerX, centerY, radius, startAngle, endAngle);
+const arcPath = describeArc(centerX, centerY, radius, startAngle, endAngle);
 gaugeBg.setAttribute("d", arcPath);
 gauge.setAttribute("d", arcPath);
 const length = gauge.getTotalLength();
@@ -144,7 +142,7 @@ const fuelRadius = 130;
 const fuelStart = Math.PI / 3.8;
 const fuelEnd = -Math.PI / 3.8;
 const fuelBg = document.createElementNS("http://www.w3.org/2000/svg", "path");
-fuelBg.setAttribute("d", speedpointer(centerX, centerY, fuelRadius, fuelStart, fuelEnd, 0));
+fuelBg.setAttribute("d", describeArc(centerX, centerY, fuelRadius, fuelStart, fuelEnd, 0));
 fuelBg.setAttribute("stroke", "#444");
 fuelBg.setAttribute("stroke-width", "5");
 fuelBg.setAttribute("fill", "none");
@@ -153,7 +151,7 @@ fuelBg.setAttribute("transform", `rotate(90 ${centerX} ${centerY})`);
 svg.appendChild(fuelBg);
 
 const fuelProgress = document.createElementNS("http://www.w3.org/2000/svg", "path");
-fuelProgress.setAttribute("d", speedpointer(centerX, centerY, fuelRadius, fuelStart, fuelEnd, 0));
+fuelProgress.setAttribute("d", describeArc(centerX, centerY, fuelRadius, fuelStart, fuelEnd, 0));
 fuelProgress.setAttribute("stroke", "#fff");
 fuelProgress.setAttribute("stroke-width", "2");
 fuelProgress.setAttribute("fill", "none");
@@ -189,10 +187,10 @@ function setLeftIndicator(state) {
     }, 400);
 }
 
-function stopLeftIndicator() {
-    clearInterval(leftBlinkInterval); leftBlinkInterval = null;
-    leftBlinkOn = false; document.getElementById("leftIndicator").style.opacity = "0";
-}
+// function stopLeftIndicator() {
+//     clearInterval(leftBlinkInterval); leftBlinkInterval = null;
+//     leftBlinkOn = false; document.getElementById("leftIndicator").style.opacity = "0";
+// }
 
 function setRightIndicator(state) {
     if (rightBlinkInterval) return;
@@ -202,24 +200,49 @@ function setRightIndicator(state) {
     }, 400);
 }
 
-function stopRightIndicator() {
-    clearInterval(rightBlinkInterval); rightBlinkInterval = null;
-    rightBlinkOn = false; document.getElementById("rightIndicator").style.opacity = "0";
-}
+// function stopRightIndicator() {
+//     clearInterval(rightBlinkInterval); rightBlinkInterval = null;
+//     rightBlinkOn = false; document.getElementById("rightIndicator").style.opacity = "0";
+// }
 
 // ====================== SPEED UPDATE ======================
-function setSpeed(speedValue) {
-    elements.speedValue.innerText = `${Math.round(speedValue * 2.236936)}`;
+/**
+ * Updates the speed display based on the current speed mode.
+ * @param {number} speed - The speed value in meters per second (m/s).
+ * @description Converts the speed value to the current speed mode and updates the display.
+ */
+function setSpeed(speed) {
+    switch(speedMode)
+    {
+        case 1: speed = elements.speed.innerText = `${Math.round(speed * 2.236936)}`; break; // MPH
+        case 2: speed = elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break; // Knots
+        default: speed = elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`; // KMH
+    }
+}
+
+
+/**
+ * Sets the speed display mode and updates the speed unit display.
+ * @param {number} mode - The speed mode to set (0: KMH, 1: MPH, 2: Knots).
+ */
+function setSpeedMode(mode) {
+    speedMode = mode;
+    switch(mode)
+    {
+        case 1: elements.speedMode.innerText = 'MPH'; break;
+        case 2: elements.speedMode.innerText = 'Knots'; break;
+        default: elements.speedMode.innerText = 'KMH';
+    }
 }
 
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     elements = {
         speed: document.getElementById('speed'),
-        pointer: document.getElementById("speedPointer"),
         fuel: document.getElementById('fuel'),
         health: document.getElementById('health'),
         indicators: document.getElementById('indicators'),
+        gauge: document.getElementById('describeArc'), 
     };
 });
 
