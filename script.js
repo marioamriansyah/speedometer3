@@ -206,6 +206,63 @@ function setFuel(percent) {
     fuelProgress.style.strokeDashoffset = fuelLength * (percent / 100);
 }
 
+// ====================== Fuel Text ======================
+const fuelText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+fuelText.setAttribute("x", centerX + -4);
+fuelText.setAttribute("y", centerY + 105); // posisinya di bawah jarum / center
+fuelText.setAttribute("fill", "#aaa");
+fuelText.setAttribute("font-size", "16px");
+fuelText.setAttribute("font-weight", "600");
+fuelText.textContent = "100%";
+svg.appendChild(fuelText);
+
+// update fungsi setFuel agar text sinkron
+function setFuel(percent) {
+    percent = Math.max(0, Math.min(100, percent));
+    fuelProgress.style.strokeDashoffset = fuelLength * (1 - percent / 100);
+
+    // update text
+    fuelText.textContent = `${Math.round(percent)}%`;
+}
+
+//indicator
+let leftBlinkInterval = null;
+let rightBlinkInterval = null;
+let leftBlinkOn = false;
+let rightBlinkOn = false;
+
+function startLeftBlinking() {
+    if (leftBlinkInterval) return;
+    leftBlinkInterval = setInterval(() => {
+        leftBlinkOn = !leftBlinkOn;
+        document.getElementById("leftIndicator").style.opacity = leftBlinkOn ? "1" : "0";
+    }, 400);
+}
+
+function stopLeftBlinking() {
+    clearInterval(leftBlinkInterval);
+    leftBlinkInterval = null;
+    leftBlinkOn = false;
+    document.getElementById("leftIndicator").style.opacity = "0";
+}
+
+function startRightBlinking() {
+    if (rightBlinkInterval) return;
+    rightBlinkInterval = setInterval(() => {
+        rightBlinkOn = !rightBlinkOn;
+        document.getElementById("rightIndicator").style.opacity = rightBlinkOn ? "1" : "0";
+    }, 400);
+}
+
+function stopRightBlinking() {
+    clearInterval(rightBlinkInterval);
+    rightBlinkInterval = null;
+    rightBlinkOn = false;
+    document.getElementById("rightIndicator").style.opacity = "0";
+}
+
+
+
 // ====================== SPEEDOMETER ======================
 function setSpeed(speed) {
     speed = Math.min(speed, maxSpeed);
@@ -250,4 +307,12 @@ setInterval(() => {
     if (fuel <= 0 || fuel >= 100) fuelDir *= -1;
     setFuel(fuel);
 
-}, 200);
+    const randomLeft = Math.random() > 0.5;
+    const randomRight = Math.random() > 0.5;
+
+    if (randomLeft) startLeftBlinking();
+    else stopLeftBlinking();
+
+    if (randomRight) startRightBlinking();
+    else stopRightBlinking();
+}, 1000);

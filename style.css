@@ -58,7 +58,7 @@ body {
 
 .unit {
     position: absolute;
-    top: 65%;
+    top: 62%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 16px;
@@ -139,9 +139,9 @@ body {
 
 .icon-fuel {
     position: absolute;
-    width: 13px;
-    left: 41%;
-    top: 83%;
+    width: 14px;
+    left: 127px;
+    top: 190px;
     fill: #aaa;
 }
 
@@ -154,4 +154,18 @@ body {
     font-size: 13px;
     font-weight: 400;
     color: #aaa;
+}
+
+.indicator {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: space-between;
+    width: 110px;
+}
+
+#indicator img {
+    width: 15px;
 }
