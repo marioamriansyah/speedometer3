@@ -187,10 +187,10 @@ function setLeftIndicator(state) {
     }, 400);
 }
 
-// function stopLeftIndicator() {
-//     clearInterval(leftBlinkInterval); leftBlinkInterval = null;
-//     leftBlinkOn = false; document.getElementById("leftIndicator").style.opacity = "0";
-// }
+function stopLeftIndicator() {
+    clearInterval(leftBlinkInterval); leftBlinkInterval = null;
+    leftBlinkOn = false; document.getElementById("leftIndicator").style.opacity = "0";
+}
 
 function setRightIndicator(state) {
     if (rightBlinkInterval) return;
@@ -200,10 +200,10 @@ function setRightIndicator(state) {
     }, 400);
 }
 
-// function stopRightIndicator() {
-//     clearInterval(rightBlinkInterval); rightBlinkInterval = null;
-//     rightBlinkOn = false; document.getElementById("rightIndicator").style.opacity = "0";
-// }
+function stopRightIndicator() {
+    clearInterval(rightBlinkInterval); rightBlinkInterval = null;
+    rightBlinkOn = false; document.getElementById("rightIndicator").style.opacity = "0";
+}
 
 // ====================== SPEED UPDATE ======================
 /**
@@ -242,7 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fuel: document.getElementById('fuel'),
         health: document.getElementById('health'),
         indicators: document.getElementById('indicators'),
-        gauge: document.getElementById('describeArc'), 
     };
 });
 
