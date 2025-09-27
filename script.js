@@ -14,6 +14,12 @@ const startAngle = Math.PI * 0.8;   // 144°
 const endAngle = Math.PI * 2.2;     // 396°
 const maxSpeed = 160;
 
+let elements = {};
+let speedMode = 1;
+let indicators = 0;
+
+const onOrOff = state => state ? 'On' : 'Off';
+
 // tick settings
 const tickSettings = {
     major: { radiusOffset: 20, length: 10 },
@@ -123,9 +129,12 @@ svg.appendChild(healthCircle);
 const healthLength = 2 * Math.PI * healthRadius;
 healthCircle.style.strokeDasharray = healthLength;
 
-function setHealth(percent) {
-    percent = Math.max(0, Math.min(100, percent));
-    healthCircle.style.strokeDashoffset = healthLength - (percent / 100) * healthLength;
+/**
+ * Updates the vehicle health display as a percentage.
+ * @param {number} health - The vehicle health level (0 to 1).
+ */
+function setHealth(health) {
+    elements.health.innerText = `${(health * 100).toFixed(1)}%`;
 }
 
 // ====================== FUEL CIRCLE ======================
@@ -162,17 +171,15 @@ fuelText.setAttribute("font-weight", "600");
 fuelText.textContent = "100%";
 svg.appendChild(fuelText);
 
-function setFuel(percent) {
-    percent = Math.max(0, Math.min(100, percent));
-    fuelProgress.style.strokeDashoffset = fuelLength * (1 - percent / 100);
-    fuelText.textContent = `${Math.round(percent)}%`;
+function setFuel(fuel) {
+    elements.fuel.innerText = `${(fuel * 100).toFixed(1)}%`;
 }
 
 // ====================== INDICATORS ======================
 let leftBlinkInterval = null, rightBlinkInterval = null;
 let leftBlinkOn = false, rightBlinkOn = false;
 
-function startLeftBlinking() {
+function setLeftIndicator(state) {
     if (leftBlinkInterval) return;
     leftBlinkInterval = setInterval(() => {
         leftBlinkOn = !leftBlinkOn;
@@ -180,12 +187,12 @@ function startLeftBlinking() {
     }, 400);
 }
 
-function stopLeftBlinking() {
+function stopLeftIndicator() {
     clearInterval(leftBlinkInterval); leftBlinkInterval = null;
     leftBlinkOn = false; document.getElementById("leftIndicator").style.opacity = "0";
 }
 
-function startRightBlinking() {
+function setRightIndicator(state) {
     if (rightBlinkInterval) return;
     rightBlinkInterval = setInterval(() => {
         rightBlinkOn = !rightBlinkOn;
@@ -193,24 +200,34 @@ function startRightBlinking() {
     }, 400);
 }
 
-function stopRightBlinking() {
+function stopRightIndicator() {
     clearInterval(rightBlinkInterval); rightBlinkInterval = null;
     rightBlinkOn = false; document.getElementById("rightIndicator").style.opacity = "0";
 }
 
 // ====================== SPEED UPDATE ======================
+/**
+ * Updates the speed display based on the current speed mode.
+ * @param {number} speed - The speed value in meters per second (m/s).
+ * @description Converts the speed value to the current speed mode and updates the display.
+ */
 function setSpeed(speed) {
-    speed = Math.min(speed, maxSpeed);
-    speedElement.textContent = speed;
-    const percent = speed / maxSpeed;
-    const offset = length - percent * length;
-    gauge.style.strokeDashoffset = offset;
-    document.querySelectorAll("#ticks line").forEach(tick => {
-        const tickSpeed = parseInt(tick.dataset.speed);
-        if (tickSpeed <= speed) tick.classList.add("tick-passed");
-        else tick.classList.remove("tick-passed");
-    });
+    switch (speedMode) {
+        case 1: speed = elements.speed.innerText = `${Math.round(speed * 2.236936)} MPH`; break; // MPH
+        case 2: speed = elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break; // Knots
+        default: speed = elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`; // KMH
+    }
 }
+
+// Wait for the DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    elements = {
+        speed: document.getElementById('speed'),
+        fuel: document.getElementById('fuel'),
+        health: document.getElementById('health'),
+        indicators: document.getElementById('indicators'),
+    };
+});
 
 // // ====================== SIMULATION ======================
 // let speed = 0, health = 90, fuel = 100;
