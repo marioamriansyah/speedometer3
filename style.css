@@ -4,7 +4,7 @@ body {
     align-items: center;
     height: 100vh;
     background: rgb(0, 0, 0);
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
 }
 
 .speedometer {
@@ -21,35 +21,47 @@ body {
 
 .gauge-bg {
     fill: none;
-    stroke: #333;
+    stroke: #081B17;
     stroke-width: 50;
-    opacity: 0.3;
-    /* stroke-linecap: round; */
 }
 
 .gauge-progress {
     fill: none;
-    stroke: #198EAB;
     stroke-width: 50;
     transition: stroke-dashoffset 0.2s ease;
 }
 
+.health-bg {
+    fill: none;
+    stroke: #333;
+    stroke-width: 8;
+    opacity: 0.3;
+}
+
+.health-circle {
+    fill: none;
+    stroke: #06dfb0;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.3s ease;
+}
+
 .speed-text {
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 64px;
+    font-size: 52px;
     font-weight: 600;
     color: white;
 }
 
 .unit {
     position: absolute;
-    top: 80%;
+    top: 65%;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 20px;
+    font-size: 16px;
     color: #aaa;
 }
 
@@ -61,30 +73,36 @@ body {
     stroke: #fff;
     /* putih untuk 20 km/h */
     stroke-width: 2.5;
+    stroke-linecap: round;
 }
 
 .tick-medium {
     stroke: #aaa;
-    /* abu sedang untuk 10 km/h */
     stroke-width: 2;
+    stroke-linecap: round;
 }
 
 .tick-small {
-    stroke: #c7c7c7;
-    /* abu gelap untuk 2–8–14 dst */
+    stroke: #c7c7c752;
     stroke-width: 1.5;
 }
 
 .tick-label {
-    fill: #ffffff;
-    font-size: 15px;
+    fill: #fff;
+    font-size: 13px;
     text-anchor: middle;
     alignment-baseline: middle;
-    font-weight: 700;
+    dominant-baseline: middle;
+    font-weight: 500;
 }
 
 .tick-passed {
     stroke: black !important;
+}
+
+.outer-tick {
+    stroke: #ffffff50;
+    stroke-width: 1.2;
 }
 
 /* #speed {
@@ -94,3 +112,46 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 } */
+
+.fuel-bg {
+    stroke: #bbbbbb79;
+    /* background gelap */
+    stroke-width: 6;
+    /* tebal garis */
+    fill: none;
+    stroke-linecap: round;
+}
+
+.fuel-progress {
+    stroke: rgb(255, 255, 255);
+    /* warna progres fuel */
+    stroke-width: 6;
+    fill: none;
+    stroke-linecap: round;
+}
+
+.fuel-label {
+    font-size: 12px;
+    fill: white;
+    /* warna teks */
+    font-family: sans-serif;
+}
+
+.icon-fuel {
+    position: absolute;
+    width: 13px;
+    left: 41%;
+    top: 83%;
+    fill: #aaa;
+}
+
+.fuel-label {
+    position: absolute;
+    left: 156px;
+    transform: translateX(-50%);
+    top: 189px;
+    /* di atas icon fuel */
+    font-size: 13px;
+    font-weight: 400;
+    color: #aaa;
+}
