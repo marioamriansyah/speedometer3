@@ -1,7 +1,6 @@
 const speedElement = document.getElementById("speed");
 const gaugeBg = document.querySelector(".gauge-bg");
 const gauge = document.querySelector(".gauge-progress");
-const gaugegear = document.querySelector(".gauge-gear");
 const ticksGroup = document.getElementById("ticks");
 const outerTicksGroup = document.getElementById("outerTicks");
 
@@ -228,7 +227,6 @@ function setSpeed(speed) {
 setSpeed(0);
 setHealth(100);
 setFuel(100); // fuel tambahan
-setGear("N");
 
 // simulasi
 let speed = 0;
