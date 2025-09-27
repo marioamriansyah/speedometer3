@@ -280,39 +280,39 @@ function setSpeed(speed) {
     });
 }
 
-// inisialisasi
-setSpeed(0);
-setHealth(100);
-setFuel(100); // fuel tambahan
+// // inisialisasi
+// setSpeed(0);
+// setHealth(100);
+// setFuel(100); // fuel tambahan
 
-// simulasi
-let speed = 0;
-let health = 100;
-let healthDir = -1;
-let fuel = 100;
-let fuelDir = -0.5; // misal fuel berkurang perlahan
+// // simulasi
+// let speed = 0;
+// let health = 100;
+// let healthDir = -1;
+// let fuel = 100;
+// let fuelDir = -0.5; // misal fuel berkurang perlahan
 
-setInterval(() => {
-    // speedometer
-    speed = (speed + 3) % 200;
-    setSpeed(speed);
+// setInterval(() => {
+//     // speedometer
+//     speed = (speed + 3) % 200;
+//     setSpeed(speed);
 
-    // health
-    health += healthDir;
-    if (health <= 0 || health >= 100) healthDir *= -1;
-    setHealth(health);
+//     // health
+//     health += healthDir;
+//     if (health <= 0 || health >= 100) healthDir *= -1;
+//     setHealth(health);
 
-    // fuel
-    fuel += fuelDir;
-    if (fuel <= 0 || fuel >= 100) fuelDir *= -1;
-    setFuel(fuel);
+//     // fuel
+//     fuel += fuelDir;
+//     if (fuel <= 0 || fuel >= 100) fuelDir *= -1;
+//     setFuel(fuel);
 
-    const randomLeft = Math.random() > 0.5;
-    const randomRight = Math.random() > 0.5;
+//     const randomLeft = Math.random() > 0.5;
+//     const randomRight = Math.random() > 0.5;
 
-    if (randomLeft) startLeftBlinking();
-    else stopLeftBlinking();
+//     if (randomLeft) startLeftBlinking();
+//     else stopLeftBlinking();
 
-    if (randomRight) startRightBlinking();
-    else stopRightBlinking();
-}, 1000);
+//     if (randomRight) startRightBlinking();
+//     else stopRightBlinking();
+// }, 1000);

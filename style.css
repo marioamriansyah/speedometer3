@@ -1,17 +1,22 @@
 body {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: rgb(0, 0, 0);
+    background: black;*/
     font-family: 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
 }
 
 .speedometer {
-    position: relative;
     width: 300px;
-    height: 230px;
-    /* setengah */
+    height: 300px;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
 }
 
 .gauge {
@@ -21,7 +26,7 @@ body {
 
 .gauge-bg {
     fill: none;
-    stroke: #081B17;
+    stroke: #081b17cc;
     stroke-width: 50;
 }
 
@@ -139,9 +144,9 @@ body {
 
 .icon-fuel {
     position: absolute;
-    width: 14px;
-    left: 127px;
-    top: 190px;
+    width: 16px;
+    left: 125px;
+    top: 248px;
     fill: #aaa;
 }
 
