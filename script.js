@@ -212,7 +212,27 @@ function stopRightIndicator() {
  * @description Converts the speed value to the current speed mode and updates the display.
  */
 function setSpeed(speed) {
-    const speedInKmh = Math.round(speed * 3.6);
+    switch(speedMode)
+    {
+        case 1: speed = elements.speed.innerText = `${Math.round(speed * 2.236936)}`; break; // MPH
+        case 2: speed = elements.speed.innerText = `${Math.round(speed * 1.943844)} Knots`; break; // Knots
+        default: speed = elements.speed.innerText = `${Math.round(speed * 3.6)} KMH`; // KMH
+    }
+}
+
+
+/**
+ * Sets the speed display mode and updates the speed unit display.
+ * @param {number} mode - The speed mode to set (0: KMH, 1: MPH, 2: Knots).
+ */
+function setSpeedMode(mode) {
+    speedMode = mode;
+    switch(mode)
+    {
+        case 1: elements.speedMode.innerText = 'MPH'; break;
+        case 2: elements.speedMode.innerText = 'Knots'; break;
+        default: elements.speedMode.innerText = 'KMH';
+    }
 }
 
 // Wait for the DOM to be fully loaded
